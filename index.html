@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoMarket - Used Vehicles</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <div class="container nav-inner">
+
+      <div class="logo">
+        <span class="logo-icon">A</span>
+        <span>Auto<span>Market</span></span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#vehicles">Vehicles</a>
+        <a href="#sell">Sell Your Vehicle</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-outline" onclick="openLogin()">
+          Sign In
+        </button>
+        <button class="btn btn-primary" onclick="openSellModal()">
+          + Sell Vehicle
+        </button>
+      </div>
+
+      <button class="mobile-menu" onclick="toggleMobileMenu()">☰</button>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="home">
+    <div class="container hero-content">
+
+      <div class="hero-text">
+        <span class="eyebrow">TRUSTED USED VEHICLE MARKETPLACE</span>
+
+        <h1>
+          Find Your
+          <span>Perfect Ride.</span>
+        </h1>
+
+        <p>
+          Discover quality used cars, bikes and commercial vehicles
+          from verified sellers.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#vehicles" class="btn btn-primary btn-large">
+            Browse Vehicles
+          </a>
+          <button class="btn btn-white btn-large" onclick="openSellModal()">
+            Sell Your Vehicle
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-search">
+        <div class="search-header">
+          <h3>Find Your Vehicle</h3>
+          <span>500+ listings</span>
+        </div>
+
+        <div class="search-grid">
+
+          <div class="input-group">
+            <label>Keyword</label>
+            <input
+              type="text"
+              id="heroSearch"
+              placeholder="e.g. Toyota, BMW..."
+              oninput="searchVehicles()"
+            >
+          </div>
+
+          <div class="input-group">
+            <label>Vehicle Type</label>
+            <select id="heroType" onchange="searchVehicles()">
+              <option value="">All Types</option>
+              <option value="Car">Car</option>
+              <option value="SUV">SUV</option>
+              <option value="Bike">Bike</option>
+              <option value="Truck">Truck</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label>Min Price</label>
+            <input type="number" id="heroMinPrice" placeholder="₹ 1,00,000"
+              oninput="searchVehicles()">
+          </div>
+
+          <div class="input-group">
+            <label>Max Price</label>
+            <input type="number" id="heroMaxPrice" placeholder="₹ 50,00,000"
+              oninput="searchVehicles()">
+          </div>
+
+        </div>
+
+        <button class="btn btn-primary search-btn" onclick="scrollToVehicles()">
+          Search Vehicles →
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="container">
+
+    <section class="section" id="vehicles">
+
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow dark">EXPLORE INVENTORY</span>
+          <h2>Featured Vehicles</h2>
+        </div>
+
+        <div class="view-options">
+          <button class="active">▦</button>
+          <button>☰</button>
+        </div>
+      </div>
+
+
+      <!-- FILTERS -->
+      <div class="filters">
+
+        <div class="filter-search">
+          🔍
+          <input
+            type="text"
+            id="filterSearch"
+            placeholder="Search vehicles..."
+            oninput="searchVehicles()"
+          >
+        </div>
+
+        <select id="filterMake" onchange="searchVehicles()">
+          <option value="">All Makes</option>
+          <option value="Toyota">Toyota</option>
+          <option value="BMW">BMW</option>
+          <option value="Honda">Honda</option>
+          <option value="Mercedes">Mercedes</option>
+          <option value="Ford">Ford</option>
+        </select>
+
+        <select id="filterFuel" onchange="searchVehicles()">
+          <option value="">Fuel Type</option>
+          <option value="Petrol">Petrol</option>
+          <option value="Diesel">Diesel</option>
+          <option value="Electric">Electric</option>
+          <option value="Hybrid">Hybrid</option>
+        </select>
+
+        <select id="sortVehicles" onchange="searchVehicles()">
+          <option value="newest">Newest</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+          <option value="year">Newest Year</option>
+        </select>
+
+      </div>
+
+
+      <!-- VEHICLE GRID -->
+      <div class="vehicle-grid" id="vehicleGrid">
+        <!-- JS inserts vehicles -->
+      </div>
+
+      <div class="no-results" id="noResults">
+        <div>🚗</div>
+        <h3>No vehicles found</h3>
+        <p>Try changing your search or filters.</p>
+      </div>
+
+    </section>
+
+
+    <!-- ================= STATS ================= -->
+    <section class="stats-section">
+
+      <div class="stat-card">
+        <div class="stat-icon">🚘</div>
+        <div>
+          <strong>12,500+</strong>
+          <span>Vehicles Listed</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div>
+          <strong>8,200+</strong>
+          <span>Happy Customers</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">✓</div>
+        <div>
+          <strong>98%</strong>
+          <span>Verified Sellers</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">★</div>
+        <div>
+          <strong>4.9/5</strong>
+          <span>Customer Rating</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= SELL MODAL ================= -->
+  <div class="modal-overlay" id="sellModal">
+
+    <div class="modal">
+
+      <button class="modal-close" onclick="closeSellModal()">×</button>
+
+      <div class="modal-header">
+        <span class="eyebrow dark">SELL YOUR VEHICLE</span>
+        <h2>Create Listing</h2>
+        <p>Enter your vehicle details below.</p>
+      </div>
+
+      <form id="vehicleForm">
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label>Vehicle Name</label>
+            <input id="vehicleName" required placeholder="Toyota Camry">
+          </div>
+
+          <div class="form-group">
+            <label>Make</label>
+            <select id="vehicleMake" required>
+              <option value="">Select Make</option>
+              <option>Toyota</option>
+              <option>BMW</option>
+              <option>Honda</option>
+              <option>Mercedes</option>
+              <option>Ford</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Type</label>
+            <select id="vehicleType" required>
+              <option value="">Select Type</option>
+              <option>Car</option>
+              <option>SUV</option>
+              <option>Bike</option>
+              <option>Truck</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Year</label>
+            <input id="vehicleYear" type="number" min="1990" max="2026" required>
+          </div>
+
+          <div class="form-group">
+            <label>Price (₹)</label>
+            <input id="vehiclePrice" type="number" required>
+          </div>
+
+          <div class="form-group">
+            <label>Fuel</label>
+            <select id="vehicleFuel" required>
+              <option value="">Select Fuel</option>
+              <option>Petrol</option>
+              <option>Diesel</option>
+              <option>Electric</option>
+              <option>Hybrid</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Kilometers</label>
+            <input id="vehicleKm" type="number" required>
+          </div>
+
+          <div class="form-group">
+            <label>Location</label>
+            <input id="vehicleLocation" required placeholder="Thrissur, Kerala">
+          </div>
+
+          <div class="form-group full">
+            <label>Image URL</label>
+            <input
+              id="vehicleImage"
+              placeholder="https://images.unsplash.com/..."
+            >
+          </div>
+
+        </div>
+
+        <button class="btn btn-primary full-btn" type="submit">
+          Publish Vehicle
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+
+  <!-- ================= VEHICLE DETAILS MODAL ================= -->
+  <div class="modal-overlay" id="detailsModal">
+
+    <div class="modal details-modal">
+
+      <button class="modal-close" onclick="closeDetails()">×</button>
+
+      <img id="detailImage" class="detail-image">
+
+      <div class="detail-content">
+
+        <span class="vehicle-badge">VERIFIED</span>
+
+        <h2 id="detailTitle"></h2>
+
+        <div class="detail-price" id="detailPrice"></div>
+
+        <div class="detail-specs" id="detailSpecs"></div>
+
+        <button class="btn btn-primary full-btn">
+          Contact Seller
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= LOGIN MODAL ================= -->
+  <div class="modal-overlay" id="loginModal">
+
+    <div class="modal login-modal">
+
+      <button class="modal-close" onclick="closeLogin()">×</button>
+
+      <div class="login-logo">A</div>
+
+      <h2>Welcome Back</h2>
+
+      <p>Sign in to manage your listings.</p>
+
+      <form onsubmit="login(event)">
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" required placeholder="admin@example.com">
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" required placeholder="••••••••">
+        </div>
+
+        <button class="btn btn-primary full-btn">
+          Sign In
+        </button>
+
+      </form>
+
+      <button class="demo-login" onclick="openDashboard()">
+        Demo Admin Dashboard
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- ================= ADMIN DASHBOARD ================= -->
+  <div id="dashboard" class="dashboard">
+
+    <aside class="sidebar">
+
+      <div class="sidebar-logo">
+        <span class="logo-icon">A</span>
+        AutoMarket
+      </div>
+
+      <nav class="dashboard-nav">
+
+        <a class="active" onclick="showDashboard('overview')">
+          <span>▦</span> Overview
+        </a>
+
+        <a onclick="showDashboard('inventory')">
+          <span>🚘</span> Inventory
+        </a>
+
+        <a onclick="showDashboard('sales')">
+          <span>💰</span> Sales
+        </a>
+
+        <a onclick="showDashboard('customers')">
+          <span>👥</span> Customers
+        </a>
+
+        <a onclick="showDashboard('settings')">
+          <span>⚙</span> Settings
+        </a>
+
+      </nav>
+
+      <button class="dashboard-logout" onclick="closeDashboard()">
+        ← Back to Website
+      </button>
+
+    </aside>
+
+
+    <section class="dashboard-main">
+
+      <header class="dashboard-header">
+
+        <div>
+          <span class="eyebrow dark">ADMIN PANEL</span>
+          <h1 id="dashboardTitle">Dashboard Overview</h1>
+        </div>
+
+        <div class="admin-profile">
+          <div class="admin-avatar">AD</div>
+          <div>
+            <strong>Admin</strong>
+            <small>Administrator</small>
+          </div>
+        </div>
+
+      </header>
+
+
+      <!-- OVERVIEW -->
+      <div id="overviewPanel" class="dashboard-panel">
+
+        <div class="dashboard-cards">
+
+          <div class="dashboard-card">
+            <div class="dash-icon blue">🚘</div>
+            <span>Total Vehicles</span>
+            <strong id="totalVehicles">0</strong>
+            <small class="positive">↑ 12.5% this month</small>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="dash-icon green">💰</div>
+            <span>Total Sales</span>
+            <strong>₹24.8L</strong>
+            <small class="positive">↑ 8.2% this month</small>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="dash-icon orange">👥</div>
+            <span>Customers</span>
+            <strong>1,284</strong>
+            <small class="positive">↑ 5.4% this month</small>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="dash-icon purple">👁</div>
+            <span>Listing Views</span>
+            <strong>48.2K</strong>
+            <small class="positive">↑ 15.8% this month</small>
+          </div>
+
+        </div>
+
+
+        <div class="dashboard-grid">
+
+          <div class="panel-box large">
+
+            <div class="panel-heading">
+              <div>
+                <h3>Sales Overview</h3>
+                <p>Monthly sales performance</p>
+              </div>
+
+              <select>
+                <option>Last 6 months</option>
+                <option>This year</option>
+              </select>
+            </div>
+
+            <div class="chart">
+
+              <div class="chart-bars">
+                <div style="height:40%"></div>
+                <div style="height:55%"></div>
+                <div style="height:45%"></div>
+                <div style="height:70%"></div>
+                <div style="height:60%"></div>
+                <div style="height:85%"></div>
+                <div style="height:72%"></div>
+                <div style="height:92%"></div>
+              </div>
+
+              <div class="chart-labels">
+                <span>Mar</span>
+                <span>Apr</span>
+                <span>May</span>
+                <span>Jun</span>
+                <span>Jul</span>
+                <span>Aug</span>
+                <span>Sep</span>
+                <span>Oct</span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="panel-box">
+
+            <div class="panel-heading">
+              <div>
+                <h3>Vehicle Types</h3>
+                <p>Current inventory</p>
+              </div>
+            </div>
+
+            <div class="donut">
+              <div class="donut-center">
+                <strong>100%</strong>
+                <span>Inventory</span>
+              </div>
+            </div>
+
+            <div class="legend">
+              <span><i class="dot blue-dot"></i> Cars 42%</span>
+              <span><i class="dot green-dot"></i> SUVs 28%</span>
+              <span><i class="dot orange-dot"></i> Bikes 20%</span>
+              <span><i class="dot purple-dot"></i> Trucks 10%</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel-box">
+
+          <div class="panel-heading">
+            <div>
+              <h3>Recent Listings</h3>
+              <p>Latest vehicles added</p>
+            </div>
+
+            <button class="btn btn-small btn-outline"
+              onclick="showDashboard('inventory')">
+              View All
+            </button>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Vehicle</th>
+                  <th>Price</th>
+                  <th>Year</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody id="recentTable"></tbody>
+
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- INVENTORY -->
+      <div id="inventoryPanel" class="dashboard-panel hidden">
+
+        <div class="inventory-header">
+          <div>
+            <h2>Vehicle Inventory</h2>
+            <p>Manage all vehicle listings</p>
+          </div>
+
+          <button class="btn btn-primary" onclick="openSellModal()">
+            + Add Vehicle
+          </button>
+        </div>
+
+        <div class="panel-box">
+
+          <div class="table-container">
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Vehicle</th>
+                  <th>Make</th>
+                  <th>Price</th>
+                  <th>Year</th>
+                  <th>Fuel</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="inventoryTable"></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- SALES -->
+      <div id="salesPanel" class="dashboard-panel hidden">
+
+        <div class="empty-dashboard">
+          <div>💰</div>
+          <h2>Sales Management</h2>
+          <p>Your sales reports and transactions will appear here.</p>
+        </div>
+
+      </div>
+
+
+      <!-- CUSTOMERS -->
+      <div id="customersPanel" class="dashboard-panel hidden">
+
+        <div class="empty-dashboard">
+          <div>👥</div>
+          <h2>Customer Management</h2>
+          <p>Manage buyers and sellers from this section.</p>
+        </div>
+
+      </div>
+
+
+      <!-- SETTINGS -->
+      <div id="settingsPanel" class="dashboard-panel hidden">
+
+        <div class="empty-dashboard">
+          <div>⚙</div>
+          <h2>Settings</h2>
+          <p>Website and administrator settings.</p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+
+    <div class="container footer-grid">
+
+      <div>
+        <div class="logo">
+          <span class="logo-icon">A</span>
+          Auto<span>Market</span>
+        </div>
+
+        <p>
+          A trusted marketplace for buying and selling
+          quality used vehicles.
+        </p>
+      </div>
+
+      <div>
+        <h4>Marketplace</h4>
+        <a href="#vehicles">Browse Vehicles</a>
+        <a href="#sell">Sell Vehicle</a>
+        <a href="#">Financing</a>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <a href="#about">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Careers</a>
+      </div>
+
+      <div>
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 AutoMarket. All rights reserved.
+    </div>
+
+  </footer>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
